@@ -55,7 +55,6 @@ corr <- function(directory, threshold = 0) {
   for (count in 1:length(files_list)) {
     dat <- rbind(dat, read.csv(files_list[count]))
     cleandat <- dat[complete.cases(dat),]
-
   }
 
   if (nrow(cleandat) <= threshold) {
@@ -64,12 +63,16 @@ corr <- function(directory, threshold = 0) {
     sulfate_data <- cleandat$sulfate
     nitrate_data <- cleandat$nitrate
 
-    for (row in 1:nrow(cleandat)) {
-      correlation <- append(correlation, cor(sulfate_data, nitrate_data))
+    combined <- cbind(sulfate_data, nitrate_data)
+
+    print(is.matrix(combined))
+    for (row in 1:nrow(combined)) {
+      for (column in 1:ncol(combined)) {
+          #print(combined[row, column])
+          correlation <- append(cor(combined[row,column]))
+      }
     }
-
+    print(correlation)
   }
-
-  print(head(correlation))
 
 } #end corr()
