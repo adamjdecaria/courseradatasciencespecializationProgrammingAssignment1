@@ -63,16 +63,15 @@ corr <- function(directory, threshold = 0) {
     sulfate_data <- cleandat$sulfate
     nitrate_data <- cleandat$nitrate
 
-    combined <- cbind(sulfate_data, nitrate_data)
+    for (element in 1:length(sulfate_data)) {
+      print("Sulfate: ")
+      print(sulfate_data[element])
+      print("Nitrate: ")
+      print(nitrate_data[element])
+      print(cor(sulfate_data[element], y = nitrate_data[element]))
+      correlation <- cor(sulfate_data[element], y = nitrate_data[element])
 
-    print(is.matrix(combined))
-    for (row in 1:nrow(combined)) {
-      for (column in 1:ncol(combined)) {
-          #print(combined[row, column])
-          correlation <- append(cor(combined[row,column]))
-      }
     }
-    print(correlation)
   }
-
+  print(correlation)
 } #end corr()
