@@ -51,8 +51,7 @@ corr <- function(directory, threshold = 0) {
   dat <- data.frame()
   cleandat <- data.frame()
   correlation <- c()
-  x <- vector(mode="numeric", length = 0)
-
+  
   for (count in 1:length(files_list)) {
 
     dat <- read.csv(files_list[count])
