@@ -51,27 +51,23 @@ corr <- function(directory, threshold = 0) {
   dat <- data.frame()
   cleandat <- data.frame()
   correlation <- c()
+  x <- vector(mode="numeric", length = 0)
 
   for (count in 1:length(files_list)) {
-    dat <- rbind(dat, read.csv(files_list[count]))
-    cleandat <- dat[complete.cases(dat),]
-  }
 
-  if (nrow(cleandat) <= threshold) {
-    print("Nope.")
-  } else {
+    dat <- read.csv(files_list[count])
+    cleandat <- dat[complete.cases(dat),]
+
     sulfate_data <- cleandat$sulfate
     nitrate_data <- cleandat$nitrate
 
-    for (element in 1:length(sulfate_data)) {
-      print("Sulfate: ")
-      print(sulfate_data[element])
-      print("Nitrate: ")
-      print(nitrate_data[element])
-      print(cor(sulfate_data[element], y = nitrate_data[element]))
-      correlation <- cor(sulfate_data[element], y = nitrate_data[element])
-
+    if (nrow(cleandat) > threshold) {
+      correlation <- append(correlation, cor(sulfate_data, nitrate_data))
     }
+
+    sulfate_data <- NULL
+    nitrate_data <- NULL
+
   }
-  print(correlation)
+  correlation
 } #end corr()
